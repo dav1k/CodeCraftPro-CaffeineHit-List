@@ -4,10 +4,10 @@
 
 var app = angular.module('caffeinehit',
   [
-    'ionic',
-    'caffeinehit.controllers',
-    'caffeinehit.services',
-    'caffeinehit.filters'
+    'ionic',    // Main dependency
+    'caffeinehit.controllers',    // custom controllers
+    'caffeinehit.services',       // custom services
+    'caffeinehit.filters'         // custom filters
   ]
 );
 

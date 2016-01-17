@@ -3,14 +3,13 @@
  */
 var app = angular.module('caffeinehit.services', []);
 
-app.services('YelpService', function ($q, $http) {
-
+app.service('YelpService', function ($q, $http) {
   var self = {
     'page': 1,
     'isLoading': false,
     'hasMore': true,
     'results': [],
-    'lat': 51.544440,
+    'lat': 51.544440,     // CodeCraftPro offices in UK
     'lon': -0.022974,
     'refresh': function () {
       self.page = 1;
