@@ -15,4 +15,17 @@ app.controller('YelpCtrl', function ($scope, YelpService) {
       });
     }
   };
+
+  // loadMore function
+  $scope.loadMore = function() {
+    console.log("loadMore");
+
+    if (!$scope.yelp.isLoading && $scope.yelp.hasMore) {
+      $scope.yelp.next().then(function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
+    }
+  };
+
+
 });
