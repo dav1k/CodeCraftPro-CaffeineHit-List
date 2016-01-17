@@ -19,6 +19,7 @@
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
+  <script src="lib/ngCordova/dist/ng-cordova.js"></script>
   <script src="cordova.js"></script>
 
   <!-- your app js -->
@@ -41,9 +42,10 @@
                    on-refresh="doRefresh()">
     </ion-refresher>
 
-    <ion-list>
+    <ion-list can-swipe="true">
       <ion-item ng-repeat="cafe in yelp.results"
-                class="item-thumbnail-left">
+                class="item-thumbnail-left"
+                ng-click="openMap(cafe)">
         <img ng-src="{{cafe.image_url}}">
         <h2>{{cafe.name}}</h2>
         <p>
@@ -66,6 +68,12 @@
             {{cafe.review_count}}
           </span>
         </p>
+
+        <ion-option-button class="button-positive"
+                           ng-click="getDirections(cafe)">
+          <i class="ion ion-map"></i>&nbsp;Directions
+        </ion-option-button>
+
       </ion-item>
     </ion-list>
 

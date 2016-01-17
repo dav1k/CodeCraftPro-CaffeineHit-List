@@ -5,6 +5,7 @@
 var app = angular.module('caffeinehit',
   [
     'ionic',    // Main dependency
+    'ngCordova',  // ngCordova dependency
     'caffeinehit.controllers',    // custom controllers
     'caffeinehit.services',       // custom services
     'caffeinehit.filters'         // custom filters

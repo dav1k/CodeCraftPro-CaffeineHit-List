@@ -27,5 +27,14 @@ app.controller('YelpCtrl', function ($scope, YelpService) {
     }
   };
 
+  // getDirections(cafe) function
+  $scope.getDirections = function(cafe) {
+    console.log("getting directions for cafe")
+  }
+
+  // openMap(cafe) function
+  $scope.openMap = function(cafe) {
+    console.log("Opening map, centered on Cafe")
+  }
 
 });

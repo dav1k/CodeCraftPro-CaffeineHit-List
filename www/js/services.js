@@ -3,7 +3,7 @@
  */
 var app = angular.module('caffeinehit.services', []);
 
-app.service('YelpService', function ($q, $http) {
+app.service('YelpService', function ($q, $http, $cordovaGeolocation, $ionicPopup) {
   var self = {
     'page': 1,
     'isLoading': false,
@@ -29,31 +29,47 @@ app.service('YelpService', function ($q, $http) {
 
       var deferred = $q.defer();
 
-      var params = {
-        page: self.page,
-        lat: self.lat,
-        lon: self.lon
-      };
+      ionic.Platform.ready(function () {
+        $cordovaGeolocation.getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+          .then(function (position) {
+            self.lat = position.coords.latitude;
+            self.lon = position.coords.longitude;
 
-      $http.get('https://codecraftpro.com/api/samples/v1/coffee/', {params: params})
-        .success(function (data) {
-          self.isLoading = false;
-          console.log(data);
+            var params = {
+              page: self.page,
+              lat: self.lat,
+              lon: self.lon
+            };
 
-          if (data.businesses.length == 0) {
-            self.hasMore = false;
-          } else {
-            angular.forEach(data.businesses, function(business){
-              self.results.push(business);
-            });
-          }
+            $http.get('https://codecraftpro.com/api/samples/v1/coffee/', {params: params})
+              .success(function (data) {
+                self.isLoading = false;
+                console.log(data);
 
-          deferred.resolve();
-        })
-        .error(function (data, status, headers, config) {
-          self.isLoading = false;
-          deferred.reject(data);
-        });
+                if (data.businesses.length == 0) {
+                  self.hasMore = false;
+                } else {
+                  angular.forEach(data.businesses, function (business) {
+                    self.results.push(business);
+                  });
+                }
+
+                deferred.resolve();
+              })
+              .error(function (data, status, headers, config) {
+                self.isLoading = false;
+                deferred.reject(data);
+              });
+          }, function(err) {
+            console.log("Error getting position");
+            console.log(err);
+            $ionicPopup.alert({
+              'title':'Please enable your Geo-Location functionality on your phone',
+              'template':'It seems like you have disabled geolocation for Caffeine-Hit-List.\n\nPlease switch it on by going to your application settings.'
+            })
+          })
+      });
+
 
       return deferred.promise;
     }
