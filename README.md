@@ -1,6 +1,10 @@
 Code Craft Pro - Caffeine Hit List
 ========
-This Ionic app was created as part of the online course, Ionic: From Web to Mobile by Code Craft Pro via the Udemy platform.
+Caffeine Hit List is an Ionic app created during the online course, Ionic: From Web to Mobile by Code Craft Pro.
+
+[Code Craft Pro - Ionic: From Web to Mobile](http://school.codecraftpro.com/courses/ionic-from-web-to-mobile?utm_source=codecraftpro.com&utm_medium=frontpage&utm_campaign=website)
+
+[Udemy - Ionic: From Web to Mobile](https://www.udemy.com/ionic-from-web-to-mobile/learn/#/)
 
 Ionic App Base
 =====================
