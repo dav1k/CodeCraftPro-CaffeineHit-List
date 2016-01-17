@@ -1,6 +1,9 @@
+/**
+ * Created by Dave on 1/16/16.
+ */
 var app = angular.module('caffeinehit.services', []);
 
-app.service('YelpService', function($q, $http) {
+app.services('YelpService', function ($q, $http) {
 
   var self = {
     'page': 1,
@@ -9,7 +12,6 @@ app.service('YelpService', function($q, $http) {
     'results': [],
     'lat': 51.544440,
     'lon': -0.022974,
-
     'refresh': function () {
       self.page = 1;
       self.isLoading = false;
@@ -18,42 +20,47 @@ app.service('YelpService', function($q, $http) {
 
       return self.load();
     },
-
     'next': function () {
-      self.isLoading();
-       var deferred = $q.defer();
+      self.page += 1;
 
-       var params = {
-         page: self.page,
-         lat: self.lat,
-         lon: self.lon,
-       };
+      return self.load();
+    },
+    'load': function () {
+      self.isLoading = true;
 
-       $http({method: 'GET', url: 'https://codecraftpro.com/api/samples/v1/coffee/'})
-       .success(function(data, status, headers, config) {
-         self.isLoading =  false;
+      var deferred = $q.defer();
 
-        //  if (data.businesses.length == 0) {
-        //    self.hasMore = false;
-        //  } else {
-        //    angular.forEach(data.businesses, function(value, key) {
-        //      self.results.push(value);
-        //    });
-        //  }
+      var params = {
+        page: self.page,
+        lat: self.lat,
+        lon: self.lon
+      };
 
-         deferred.resolve();
-       })
-       .error(function(data, status, headers, config) {
-         self.isLoading = false;
-         deferred.reject(data);
-       });
+      $http.get('https://codecraftpro.com/api/samples/v1/coffee/', {params: params})
+        .success(function (data) {
+          self.isLoading = false;
+          console.log(data);
 
-       return deferred.promise;
+          //if (data.businesses.length == 0) {
+          //  self.hasMore = false;
+          //} else {
+          //  angular.forEach(data.businesess, function(business) {
+          //    self.results.push(business);
+          //  });
+          //}
+
+          deferred.resolve();
+        })
+        .error(function (data, status, headers, config) {
+          self.isLoading = false;
+          deferred.reject(data);
+        });
+
+      return deferred.promise;
     }
   };
 
   self.load();
 
   return self;
-
 });
